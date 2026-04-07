@@ -15,25 +15,25 @@ with mujoco.viewer.launch_passive(model, data) as viewer:
         print("\nTesting:", joint_name)
         print("Range (deg):", qmin * 180 / math.pi, "to", qmax * 180 / math.pi)
 
-        # 最小角
+        # minum angle
         data.qpos[qid] = qmin
         mujoco.mj_forward(model, data)
         viewer.sync()
         time.sleep(1.5)
 
-        # 中間角
+        # middle angle
         data.qpos[qid] = (qmin + qmax) / 2
         mujoco.mj_forward(model, data)
         viewer.sync()
         time.sleep(1.5)
 
-        # 最大角
+        # maximum angle
         data.qpos[qid] = qmax
         mujoco.mj_forward(model, data)
         viewer.sync()
         time.sleep(1.5)
 
-        # 回中立
+        # back to zero
         data.qpos[qid] = 0
         mujoco.mj_forward(model, data)
         viewer.sync()
