@@ -1,4 +1,4 @@
-<mujoco model="little robot (Alex)">
+<mujoco model="robot(Alex)">
     <compiler angle="radian" />
     <option timestep="0.001" gravity="0 0 -9.8" integrator="RK4" iterations="60" ls_iterations="20"/>
     <default>

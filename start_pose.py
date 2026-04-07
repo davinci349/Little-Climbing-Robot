@@ -3,7 +3,7 @@ import mujoco.viewer
 import numpy as np
 import time
 
-XML_PATH = "little robot (Alex).xml"
+XML_PATH = "robot(Alex).xml"
 
 model = mujoco.MjModel.from_xml_path(XML_PATH)
 data = mujoco.MjData(model)
