@@ -2,14 +2,14 @@
 
 
 ## Overview
-This project develops a climbing robot using MuJoCo simulation.
+This project develops a small climbing robot using MuJoCo simulation.
 
-The robot can perform basic movements and is designed for future climbing tasks using kinematics control.
+The robot can perform basic movements and is designed for future climbing tasks.
 
 ---
 
 ## Simulation Preview
-![robot](images/XS-Robot (Alex).png)
+![robot](images/XS-Robot.png)
 
 ---
 
