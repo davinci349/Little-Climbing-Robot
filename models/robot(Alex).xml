@@ -7,7 +7,7 @@
 
     <asset>
         <texture type="2d" colorspace="auto" name="grid" builtin="checker" mark="cross" rgb1="0.1 0.2 0.3" rgb2="0.2 0.3 0.4" markrgb="0.8 0.8 0.8" width="512" height="512"/>
-        <texture type="2d" colorspace="linear" name="wall_text" file="meshes/wall color.png"/>
+        <texture type="2d" colorspace="linear" name="wall_text" file="../meshes/wall color.png"/>
         <material name="grid" texture="grid" texrepeat="80 80" reflectance="0.2"/>
         <material name="wall_mat" texture="wall_text" texrepeat="1 1" specular="0.05" shininess="0" reflectance="0.1"/>
         <material name="red" rgba="1 0 0 1"/>
@@ -16,28 +16,28 @@
         <material name="magenta" rgba="1 0 1 1"/>
         <material name="grey" rgba="0.3 0.3 0.3 1"/>
 
-        <mesh name="sole_L" file="meshes/sole_L.stl" scale="0.001 0.001 0.001" />
-        <mesh name="sole_R" file="meshes/sole_R.stl" scale="0.001 0.001 0.001" />
-        <mesh name="hand_L" file="meshes/hand_L.stl" scale="0.001 0.001 0.001" />
-        <mesh name="thigh_L" file="meshes/thigh_L.stl" scale="0.001 0.001 0.001" />
-        <mesh name="pelvisY_R" file="meshes/pelvisY_R.stl" scale="0.001 0.001 0.001" />
-        <mesh name="torso" file="meshes/torso.stl" scale="0.001 0.001 0.001" />
-        <mesh name="upperarm_L" file="meshes/upperarm_L.stl" scale="0.001 0.001 0.001" />
-        <mesh name="forearm_L" file="meshes/forearm_L.stl" scale="0.001 0.001 0.001" />
-        <mesh name="forearm_R" file="meshes/forearm_R.stl" scale="0.001 0.001 0.001" />
-        <mesh name="upperarm_R" file="meshes/upperarm_R.stl" scale="0.001 0.001 0.001" />
-        <mesh name="pelvisP_R" file="meshes/pelvisP_R.stl" scale="0.001 0.001 0.001" />
-        <mesh name="pelvisP_L" file="meshes/pelvisP_L.stl" scale="0.001 0.001 0.001" />
-        <mesh name="hand_R" file="meshes/hand_R.stl" scale="0.001 0.001 0.001" />
-        <mesh name="finger_L" file="meshes/finger_L.stl" scale="0.001 0.001 0.001" />
-        <mesh name="finger_R" file="meshes/finger_R.stl" scale="0.001 0.001 0.001" />
-        <mesh name="thigh_R" file="meshes/thigh_R.stl" scale="0.001 0.001 0.001" />
-        <mesh name="waist" file="meshes/waist.stl" scale="0.001 0.001 0.001" />
-        <mesh name="calf_L" file="meshes/calf_L.stl" scale="0.001 0.001 0.001" />
-        <mesh name="calf_R" file="meshes/calf_R.stl" scale="0.001 0.001 0.001" />
-        <mesh name="pelvisY_L" file="meshes/pelvisY_L.stl" scale="0.001 0.001 0.001" />
-        <mesh name="wall" file="meshes/wall.stl" scale="0.001 0.001 0.001" />
-        <mesh name="square_hold" file="meshes/square_hold.stl" scale="0.001 0.001 0.001" />
+        <mesh name="sole_L" file="../meshes/sole_L.stl" scale="0.001 0.001 0.001" />
+        <mesh name="sole_R" file="../meshes/sole_R.stl" scale="0.001 0.001 0.001" />
+        <mesh name="hand_L" file="../meshes/hand_L.stl" scale="0.001 0.001 0.001" />
+        <mesh name="thigh_L" file="../meshes/thigh_L.stl" scale="0.001 0.001 0.001" />
+        <mesh name="pelvisY_R" file="../meshes/pelvisY_R.stl" scale="0.001 0.001 0.001" />
+        <mesh name="torso" file="../meshes/torso.stl" scale="0.001 0.001 0.001" />
+        <mesh name="upperarm_L" file="../meshes/upperarm_L.stl" scale="0.001 0.001 0.001" />
+        <mesh name="forearm_L" file="../meshes/forearm_L.stl" scale="0.001 0.001 0.001" />
+        <mesh name="forearm_R" file="../meshes/forearm_R.stl" scale="0.001 0.001 0.001" />
+        <mesh name="upperarm_R" file="../meshes/upperarm_R.stl" scale="0.001 0.001 0.001" />
+        <mesh name="pelvisP_R" file="../meshes/pelvisP_R.stl" scale="0.001 0.001 0.001" />
+        <mesh name="pelvisP_L" file="../meshes/pelvisP_L.stl" scale="0.001 0.001 0.001" />
+        <mesh name="hand_R" file="../meshes/hand_R.stl" scale="0.001 0.001 0.001" />
+        <mesh name="finger_L" file="../meshes/finger_L.stl" scale="0.001 0.001 0.001" />
+        <mesh name="finger_R" file="../meshes/finger_R.stl" scale="0.001 0.001 0.001" />
+        <mesh name="thigh_R" file="../meshes/thigh_R.stl" scale="0.001 0.001 0.001" />
+        <mesh name="waist" file="../meshes/waist.stl" scale="0.001 0.001 0.001" />
+        <mesh name="calf_L" file="../meshes/calf_L.stl" scale="0.001 0.001 0.001" />
+        <mesh name="calf_R" file="../meshes/calf_R.stl" scale="0.001 0.001 0.001" />
+        <mesh name="pelvisY_L" file="../meshes/pelvisY_L.stl" scale="0.001 0.001 0.001" />
+        <mesh name="wall" file="../meshes/wall.stl" scale="0.001 0.001 0.001" />
+        <mesh name="square_hold" file="../meshes/square_hold.stl" scale="0.001 0.001 0.001" />
         
         
     </asset>

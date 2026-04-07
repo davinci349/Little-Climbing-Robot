@@ -5,7 +5,7 @@ import time
 
 XML_PATH = "robot(Alex).xml"
 
-model = mujoco.MjModel.from_xml_path(XML_PATH)
+model = mujoco.MjModel.from_xml_path("models/robot(Alex).xml")
 data = mujoco.MjData(model)
 
 # =========================================================
