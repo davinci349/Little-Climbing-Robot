@@ -17,10 +17,7 @@ The robot can perform basic movements and is designed for future climbing tasks.
 ---
 
 ## Demo
-Watch demo here:  
-Start Pose(Simulate):  
-https://www.youtube.com/watch?v=B-bFdJrVVb0
-Start Pose(Real):  
-https://www.youtube.com/shorts/NEtwmXHOAig
+- Simulation: https://www.youtube.com/watch?v=B-bFdJrVVb0  
+- Real Robot: https://www.youtube.com/shorts/NEtwmXHOAig
 
 ---
