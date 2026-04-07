@@ -10,8 +10,9 @@ The robot can perform basic movements and is designed for future climbing tasks.
 
 ## Simulation Preview
 <p align="center">
-<img src="images/xs_robot.png" width="400">
+<img src="images/XS-Robot.png" width="400">
 </p>
+
 ---
 
 ## Demo
