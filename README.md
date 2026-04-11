@@ -17,7 +17,7 @@ The robot can perform basic movements and is designed for future climbing tasks.
 ---
 
 ## Demo
-- Simulation: https://www.youtube.com/watch?v=B-bFdJrVVb0  
-- Real Robot: https://www.youtube.com/shorts/NEtwmXHOAig
+- Simulation of Climbing: https://www.youtube.com/watch?v=B-bFdJrVVb0  
+- Real Robot Climbing: https://www.youtube.com/shorts/NEtwmXHOAig
 
 ---
