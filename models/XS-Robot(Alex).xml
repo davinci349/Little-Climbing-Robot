@@ -1,4 +1,4 @@
-<mujoco model="XS-Robot(Alex)">
+<mujoco model="models/XS-Robot(Alex)">
     <compiler angle="radian" />
     <option timestep="0.001" gravity="0 0 -9.8" integrator="RK4" iterations="60" ls_iterations="20"/>
     <default>
@@ -43,7 +43,7 @@
     </asset>
     <worldbody>
         <!-- Floor -->
-        <geom name="floor" size="5 5 0.1" type="plane" contype="1" conaffinity="1" solimp="0.9 0.95 0.001" material="grid"/>
+        <geom name="floor" size="5 5 0.1" type="plane" friction="0.2 0.005 0.0001" contype="1" conaffinity="1" solimp="0.9 0.95 0.001" material="grid"/>
 
         <!-- Cameras -->
         <camera name="front_view" pos="0 -0.5 0.2" quat="0.707107 0.707107 0 0"/>
@@ -54,8 +54,133 @@
         <light name="main_light" pos="0 0 1" dir="0 0 -1" cutoff="100" diffuse="1 1 1"/>
         <light name="fill_light" pos="0.7 -0.5 0.7"  dir="-1 1 -0.5" diffuse="1 1 1" specular="0.2 0.2 0.2"/>
         
-        <body name="scene_root" pos="0 0 0.01" euler="1.57 3.1415 0">
-            <body name="waist" pos="0 0 0.04" euler="0 0 0">
+        <!-- ===================================================== -->
+<!-- Fixed environment root: keeps old scene_root frame     -->
+<!-- ===================================================== -->
+<body name="env_root" pos="0 0 0.01" euler="1.57 3.1415 0">
+
+    <body name="wall" pos="-0.15 -0.010048494028685698 -1.6968259713301576e-17" euler="1.6886370897829906e-15 2.8121456659696125e-31 -0.0">
+        <geom name="wall_col" type="mesh" mesh="wall" pos="0 0 0" euler="0 0 0" material="wall_mat"/>
+        <inertial mass="35.324999999999996" pos="0.12 0.3 0.0975" fullinertia="1.0604123437500004 0.7365998437499995 1.7956874999999997 -1.6653345369377353e-16 -2.775557561562884e-17 -9.89644441876777e-17"/>
+    </body>
+
+    <body name="square_hold_1"
+          pos="-0.04 -2.870682836232269e-17 0.01699999871850016"
+          euler="1.3441278049432237e-15 3.8893845486631795e-62 -4.4043049545721995e-46">
+        <geom name="square_hold_1_geom" type="mesh" mesh="square_hold"
+              pos="0.01 -0.025 0" euler="0 0 0" material="red" contype="0" conaffinity="0"/>
+        <inertial mass="0.010188256727041564"
+                  pos="0.06697633301052071 0.22614883188339693 0.06835511028606878"
+                  fullinertia="3.808437067109611e-07 5.521034781505856e-07 5.326054590652897e-07 5.669535786076984e-10 -5.618073240202685e-10 6.335656325674681e-08"/>
+        <site name="hold1_target" pos="0.078 0.205 0.065" size="0.001" material="green" group="1"/>
+        <geom name="hold1_contact_m" type="box" pos="0.0770 0.203 0.061" size="0.008 0.005 0.0005" material="grey" group="1"/>
+        <geom name="hold1_contact_L" type="box" pos="0.0855 0.203 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
+        <geom name="hold1_contact_r" type="box" pos="0.0685 0.203 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
+    </body>
+
+    <body name="square_hold_1_1"
+          pos="-0.061 0.021 0.017"
+          euler="1.3441278049432237e-15 3.8893845486631795e-62 -4.4043049545721995e-46">
+        <geom name="square_hold_1_1_geom" type="mesh" mesh="square_hold"
+              pos="0.01 -0.025 0" euler="0 0 0" material="blue"/>
+        <inertial mass="0.010188256727041564"
+                  pos="0.06697633301052071 0.22614883188339693 0.06835511028606878"
+                  fullinertia="3.808437067109611e-07 5.521034781505856e-07 5.326054590652897e-07 5.669535786076984e-10 -5.618073240202685e-10 6.335656325674681e-08"/>
+        <site name="hold1_1_target" pos="0.078 0.205 0.065" size="0.001" material="green" group="1"/>
+        <geom name="hold1_1_contact_m" type="box" pos="0.0770 0.203 0.061" size="0.008 0.005 0.0005" material="grey" group="1"/>
+        <geom name="hold1_1_contact_L" type="box" pos="0.0855 0.203 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
+        <geom name="hold1_1_contact_r" type="box" pos="0.0685 0.203 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
+    </body>
+
+    <body name="square_hold_2"
+          pos="-0.04 -2.870682836232269e-17 0.01699999871850016"
+          euler="1.3441278049432237e-15 3.8893845486631795e-62 -4.4043049545721995e-46">
+        <geom name="square_hold_2_geom" type="mesh" mesh="square_hold"
+              pos="-0.13 -0.025 0" euler="0 0 0" material="red" contype="0" conaffinity="0"/>
+        <inertial mass="0.010188256727041564"
+                  pos="0.06697633301052071 0.22614883188339693 0.06835511028606878"
+                  fullinertia="3.808437067109611e-07 5.521034781505856e-07 5.326054590652897e-07 5.669535786076984e-10 -5.618073240202685e-10 6.335656325674681e-08"/>
+        <site name="hold2_target" pos="-0.063 0.205 0.065" size="0.001" material="green" group="1"/>
+        <geom name="hold2_contact_m" type="box" pos="-0.0630 0.203 0.061" size="0.008 0.005 0.0005" material="grey" group="1"/>
+        <geom name="hold2_contact_L" type="box" pos="-0.0715 0.203 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
+        <geom name="hold2_contact_r" type="box" pos="-0.0545 0.203 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
+    </body>
+
+    <body name="square_hold_2_1"
+          pos="-0.02 0.021 0.017"
+          euler="1.3441278049432237e-15 3.8893845486631795e-62 -4.4043049545721995e-46">
+        <geom name="square_hold_2_1_geom" type="mesh" mesh="square_hold"
+              pos="-0.13 -0.025 0" euler="0 0 0" material="blue"/>
+        <inertial mass="0.010188256727041564"
+                  pos="0.06697633301052071 0.22614883188339693 0.06835511028606878"
+                  fullinertia="3.808437067109611e-07 5.521034781505856e-07 5.326054590652897e-07 5.669535786076984e-10 -5.618073240202685e-10 6.335656325674681e-08"/>
+        <site name="hold2_1_target" pos="-0.063 0.205 0.065" size="0.001" material="green" group="1"/>
+        <geom name="hold2_1_contact_m" type="box" pos="-0.0630 0.203 0.061" size="0.008 0.005 0.0005" material="grey" group="1"/>
+        <geom name="hold2_1_contact_L" type="box" pos="-0.0715 0.203 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
+        <geom name="hold2_1_contact_r" type="box" pos="-0.0545 0.203 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
+    </body>
+
+    <body name="square_hold_3"
+          pos="-0.04 -2.870682836232269e-17 0.01699999871850016"
+          euler="1.3441278049432237e-15 3.8893845486631795e-62 -4.4043049545721995e-46">
+        <geom name="square_hold_3_geom" type="mesh" mesh="square_hold"
+              pos="-0.1 -0.225 0" euler="0 0 0" material="red" contype="0" conaffinity="0"/>
+        <inertial mass="0.010188256727041564"
+                  pos="0.06697633301052071 0.22614883188339693 0.06835511028606878"
+                  fullinertia="3.808437067109611e-07 5.521034781505856e-07 5.326054590652897e-07 5.669535786076984e-10 -5.618073240202685e-10 6.335656325674681e-08"/>
+        <site name="hold3_target" pos="-0.033 0.003 0.065" size="0.001" material="green" group="1"/>
+        <geom name="hold3_contact_m" type="box" pos="-0.0330 0.003 0.061" size="0.008 0.005 0.0005" material="grey" group="1"/>
+        <geom name="hold3_contact_L" type="box" pos="-0.0415 0.003 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
+        <geom name="hold3_contact_r" type="box" pos="-0.0245 0.003 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
+    </body>
+
+    <body name="square_hold_3_1"
+          pos="-0.03 0.021 0.017"
+          euler="1.3441278049432237e-15 3.8893845486631795e-62 -4.4043049545721995e-46">
+        <geom name="square_hold_3_1_geom" type="mesh" mesh="square_hold"
+              pos="-0.1 -0.225 0" euler="0 0 0" material="blue"/>
+        <inertial mass="0.010188256727041564"
+                  pos="0.06697633301052071 0.22614883188339693 0.06835511028606878"
+                  fullinertia="3.808437067109611e-07 5.521034781505856e-07 5.326054590652897e-07 5.669535786076984e-10 -5.618073240202685e-10 6.335656325674681e-08"/>
+        <site name="hold3_1_target" pos="-0.033 0.003 0.065" size="0.001" material="green" group="1"/>
+        <geom name="hold3_1_contact_m" type="box" pos="-0.0330 0.003 0.061" size="0.008 0.005 0.0005" material="grey" group="1"/>
+        <geom name="hold3_1_contact_L" type="box" pos="-0.0415 0.003 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
+        <geom name="hold3_1_contact_r" type="box" pos="-0.0245 0.003 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
+    </body>
+
+    <body name="square_hold_4"
+          pos="-0.04 -2.870682836232269e-17 0.01699999871850016"
+          euler="1.3441278049432237e-15 3.8893845486631795e-62 -4.4043049545721995e-46">
+        <geom name="square_hold_4_geom" type="mesh" mesh="square_hold"
+              pos="-0.015 -0.225 0" euler="0 0 0" material="red" contype="0" conaffinity="0"/>
+        <inertial mass="0.010188256727041564"
+                  pos="0.06697633301052071 0.22614883188339693 0.06835511028606878"
+                  fullinertia="3.808437067109611e-07 5.521034781505856e-07 5.326054590652897e-07 5.669535786076984e-10 -5.618073240202685e-10 6.335656325674681e-08"/>
+        <site name="hold4_target" pos="0.0525 0.003 0.065" size="0.001" material="green" group="1"/>
+        <geom name="hold4_contact_m" type="box" pos="0.0520 0.003 0.061" size="0.008 0.005 0.0005" material="grey" group="1"/>
+        <geom name="hold4_contact_L" type="box" pos="0.0605 0.003 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
+        <geom name="hold4_contact_r" type="box" pos="0.0435 0.003 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
+    </body>
+
+    <body name="square_hold_4_1"
+          pos="-0.02 0.021 0.017"
+          euler="1.3441278049432237e-15 3.8893845486631795e-62 -4.4043049545721995e-46">
+        <geom name="square_hold_4_1_geom" type="mesh" mesh="square_hold"
+              pos="-0.015 -0.225 0" euler="0 0 0" material="blue"/>
+        <inertial mass="0.010188256727041564"
+                  pos="0.06697633301052071 0.22614883188339693 0.06835511028606878"
+                  fullinertia="3.808437067109611e-07 5.521034781505856e-07 5.326054590652897e-07 5.669535786076984e-10 -5.618073240202685e-10 6.335656325674681e-08"/>
+        <site name="hold4_1_target" pos="0.0525 0.003 0.065" size="0.001" material="green" group="1"/>
+        <geom name="hold4_1_contact_m" type="box" pos="0.0520 0.003 0.061" size="0.008 0.005 0.0005" material="grey" group="1"/>
+        <geom name="hold4_1_contact_L" type="box" pos="0.0605 0.003 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
+        <geom name="hold4_1_contact_r" type="box" pos="0.0435 0.003 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
+    </body>
+
+    </body>
+        <body name="scene_root" pos="0 0 0.01" euler="0 0 0">
+            <freejoint name="robot_free_root"/>
+
+            <body name="waist" pos="0 0.037 0" euler="1.57 3.1415 0">
                     <geom name="waist_geom" type="mesh" mesh="waist" pos="0 0 0" euler="0 0 0" />
                     <inertial mass="0.2053882198830511" pos="-0.03262151401088563 0.10245865721406862 -0.02820232903114929" fullinertia="1.9531639422263117e-05 9.299382104709379e-05 8.605614895296947e-05 4.936742767640452e-08 1.5572044857764143e-07 1.4284572699035155e-07" />
                     
@@ -127,16 +252,19 @@
                                 <inertial mass="0.07298400129659223" pos="-0.09327772505257131 0.18204603371737094 0.02259149528686536" fullinertia="7.341642774654359e-06 4.703193627611799e-06 9.795288210179601e-06 3.407213213707652e-07 -4.225143979123756e-08 -3.343165265578358e-07" />
                                 <body name="hand_R" pos="-6.787182537162727e-05 1.5024915773348414e-12 -0.00027459497055839225" euler="3.4694469519536134e-18 -1.7353661916086396e-13 1.8720313687336336e-15">
                                     <joint name="forearm_R_forearm_R_joint_hand_R" type="hinge" axis="0.9999999999999988 -3.9718304338513495e-15 -5.6727279182489395e-14" pos="-0.11222968079695272 0.18777720537282933 0.0234023774450089" limited="true" range="-1.5708 1.5708"/> <!-- [deg] -90 ~ 90 -->
-                                    <geom name="hand_R_geom" type="mesh" mesh="hand_R" pos="0 0 0" euler="0 0 0" />
+                                    <geom name="hand_R_geom" type="mesh" mesh="hand_R" pos="0 0 0" euler="0 0 0" contype="0" conaffinity="0"/>
+                                    <geom name="hand_R_contact" type="box" pos="-0.122 0.195 0.0295" size="0.0068 0.015 0.0015" material="blue" group="1"/>
                                     <inertial mass="0.024493027697902285" pos="-0.11913547633310625 0.1922932462927115 0.027349509877098995" fullinertia="2.893568698499022e-06 1.0435076278560685e-06 3.5510017513652335e-06 4.6723094886195034e-07 1.745464235620465e-07 -1.462935030428445e-07" />
                                     <body name="finger_R" pos="-0.06515837864111779 0.00036955016259745905 -1.0311196341206141e-14" euler="-3.141592653589793 -1.7348110800963255e-13 -3.141592653589793">
                                         <joint name="hand_R_hand_R_joint_finger_R" type="hinge" axis="1.160456463599045e-13 -3.6810110567303544e-09 -0.9999996303569266" pos="0.05656730215583948 0.2087567126681734 -0.026550790959385295" limited="true" range="-1.0472 1.0472"/> <!-- [deg] -60 ~ 60 -->
-                                        <geom name="finger_R_geom" type="mesh" mesh="finger_R" pos="0 0 0" euler="0 0 0" material="green"/>
+                                        <geom name="finger_R_geom" type="mesh" mesh="finger_R" pos="0 0 0" euler="0 0 0" material="green" contype="0" conaffinity="0"/>                            
                                         <inertial mass="0.007942758398603372" pos="0.05658905933062242 0.20881733040107095 -0.040063723816041286" fullinertia="2.362432173284678e-07 3.597719150246123e-07 1.644949167404866e-07 7.913295576886869e-11 3.595020290726237e-10 -1.8294843378686973e-09" />
                                         <site name="finger_R_grip" pos="0.0565 0.206 -0.045" size="0.003" material="red" group="1"/>
                                         <geom name="finger_R_tip_contact_R" type="box" pos="0.0525 0.206 -0.045" size="0.00065 0.005 0.00065" contype="1" conaffinity="1" material="grey" group="1"/>
                                         <geom name="finger_R_tip_contact_L" type="box" pos="0.0615 0.206 -0.045" size="0.00065 0.005 0.00065" contype="1" conaffinity="1" material="grey" group="1"/>    
-                                    </body>
+                                        <geom name="finger_R_contact" type="box" pos="0.0565 0.208 -0.041" size="0.0068 0.002 0.007" material="grey" group="1"/>
+
+                                   </body>
                                 </body>
                             </body>
                         </body>
@@ -150,88 +278,22 @@
                                 <inertial mass="0.07295021340960268" pos="0.02779529751237255 0.1817107711137417 0.02273629684546983" fullinertia="7.30179380589775e-06 4.7021712641524215e-06 9.755799349648651e-06 -3.310298103231315e-07 4.8927507061617046e-08 -3.232740790530767e-07" />
                                 <body name="hand_L" pos="-0.0001888510628376971 1.5026340024690276e-12 -0.00027459497058120413" euler="3.5340968553901383e-28 -1.8825921370404264e-13 -1.7831266005718752e-18">
                                     <joint name="forearm_L_forearm_L_joint_hand_L" type="hinge" axis="-1.000000000000006 2.9670163713324797e-15 1.8773458988508767e-13" pos="0.04769160825708148 0.1873681887476951 0.023403785338886117" limited="true" range="-1.5708 1.5708"/> <!-- [deg] -90 ~ 90 -->
-                                    <geom name="hand_L_geom" type="mesh" mesh="hand_L" pos="0 0 0" euler="0 0 0" />                            
+                                    <geom name="hand_L_geom" type="mesh" mesh="hand_L" pos="0 0 0" euler="0 0 0" contype="0" conaffinity="0"/>                            
+                                    <geom name="hand_L_contact" type="box" pos="0.056 0.195 0.0295" size="0.0068 0.015 0.0015" material="blue" group="1"/>
                                     <inertial mass="0.024497128631102486" pos="0.05389928642000578 0.1918878960458683 0.027336548572393503" fullinertia="2.892326790158703e-06 1.0433001360176626e-06 3.5504136070679463e-06 -4.684323521808145e-07 -1.736285591706594e-07 -1.5009433449274412e-07" />                               
                                     <body name="finger_L" pos="-7.959505138096242e-05 -3.97610968833983e-05 7.808453542013094e-07" euler="1.514612938024343e-28 1.8818982476500296e-13 -5.4289707143111185e-17">
                                         <joint name="hand_L_hand_L_joint_finger_L" type="hinge" axis="-4.4275480087508046e-16 1.2008189581587072e-13 -0.9999999999999988" pos="0.05656720330845812 0.20875694984457796 0.026551004493543463" limited="true" range="-1.0472 1.0472"/> <!-- [deg] -60 ~ 60 -->
-                                        <geom name="finger_L_geom" type="mesh" mesh="finger_L" pos="0 0 0" euler="0 0 0" material="green"/>
+                                        <geom name="finger_L_geom" type="mesh" mesh="finger_L" pos="0 0 0" euler="0 0 0" material="green" contype="0" conaffinity="0"/>
                                         <inertial mass="0.007947501642314428" pos="0.056567536893956105 0.20883577869779976 0.04006465838922784" fullinertia="2.3610195639512764e-07 3.598301746655388e-07 1.644900107308104e-07 -2.0038453711912107e-11 1.968545317736431e-10 1.0904545547334977e-09" />
-                                        <site name="finger_L_grip" pos="0.0565 0.206 0.045" size="0.003" material="red" group="1"/>
+                                        <site name="finger_L_grip" pos="0.0565 0.205 0.045" size="0.003" material="red" group="1"/>
                                         <geom name="finger_L_tip_contact_R" type="box" pos="0.0525 0.206 0.045" size="0.0006 0.005 0.0006" contype="1" conaffinity="1" material="grey" group="1"/>
                                         <geom name="finger_L_tip_contact_L" type="box" pos="0.0615 0.206 0.045" size="0.0006 0.005 0.0006" contype="1" conaffinity="1" material="grey" group="1"/>    
+                                        <geom name="finger_L_contact" type="box" pos="0.057 0.2085 0.04" size="0.0068 0.002 0.007" material="grey" group="1"/>
                                     </body>
                                 </body>
                             </body>
                         </body>
                     </body>
-                </body>
-                <body name="wall" pos="-0.15 -0.010048494028685698 -1.6968259713301576e-17" euler="1.6886370897829906e-15 2.8121456659696125e-31 -0.0">
-                    <geom name="wall_col" type="mesh" mesh="wall" pos="0 0 0" euler="0 0 0" material="wall_mat"/>
-                    <inertial mass="35.324999999999996" pos="0.12 0.3 0.0975" fullinertia="1.0604123437500004 0.7365998437499995 1.7956874999999997 -1.6653345369377353e-16 -2.775557561562884e-17 -9.89644441876777e-17"/>
-                </body>
-                <body name="square_hold_1" pos="-0.04 -2.870682836232269e-17 0.01699999871850016" euler="1.3441278049432237e-15 3.8893845486631795e-62 -4.4043049545721995e-46">
-                    <geom name="square_hold_1_geom" type="mesh" mesh="square_hold" pos="0.01 -0.025 0" euler="0 0 0" material="red"/>
-                    <inertial mass="0.010188256727041564" pos="0.06697633301052071 0.22614883188339693 0.06835511028606878" fullinertia="3.808437067109611e-07 5.521034781505856e-07 5.326054590652897e-07 5.669535786076984e-10 -5.618073240202685e-10 6.335656325674681e-08" />
-                    <site name="hold1_target" pos="0.078 0.205 0.065" size="0.001" material="green" group="1"/>
-                    <geom name="hold1_contact_m" type="box" pos="0.0770 0.203 0.061" size="0.008 0.005 0.0005" material="grey" group="1"/>
-                    <geom name="hold1_contact_L" type="box" pos="0.0855 0.203 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
-                    <geom name="hold1_contact_r" type="box" pos="0.0685 0.203 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
-                </body>  
-                <body name="square_hold_1_1" pos="-0.061 0.021 0.017" euler="1.3441278049432237e-15 3.8893845486631795e-62 -4.4043049545721995e-46">
-                    <geom name="square_hold_1_1_geom" type="mesh" mesh="square_hold" pos="0.01 -0.025 0" euler="0 0 0" material="blue"/>
-                    <inertial mass="0.010188256727041564" pos="0.06697633301052071 0.22614883188339693 0.06835511028606878" fullinertia="3.808437067109611e-07 5.521034781505856e-07 5.326054590652897e-07 5.669535786076984e-10 -5.618073240202685e-10 6.335656325674681e-08" />
-                    <site name="hold1_1_target" pos="0.078 0.205 0.065" size="0.001" material="green" group="1"/>
-                    <geom name="hold1_1_contact_m" type="box" pos="0.0770 0.203 0.061" size="0.008 0.005 0.0005" material="grey" group="1"/>
-                    <geom name="hold1_1_contact_L" type="box" pos="0.0855 0.203 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
-                    <geom name="hold1_1_contact_r" type="box" pos="0.0685 0.203 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
-                </body>
-                <body name="square_hold_2" pos="-0.04 -2.870682836232269e-17 0.01699999871850016" euler="1.3441278049432237e-15 3.8893845486631795e-62 -4.4043049545721995e-46">
-                    <geom name="square_hold_2_geom" type="mesh" mesh="square_hold" pos="-0.13 -0.025 0" euler="0 0 0" material="red"/>
-                    <inertial mass="0.010188256727041564" pos="0.06697633301052071 0.22614883188339693 0.06835511028606878" fullinertia="3.808437067109611e-07 5.521034781505856e-07 5.326054590652897e-07 5.669535786076984e-10 -5.618073240202685e-10 6.335656325674681e-08" />
-                    <site name="hold2_target" pos="-0.063 0.205 0.065" size="0.001" material="green" group="1"/>
-                    <geom name="hold2_contact_m" type="box" pos="-0.0630 0.203 0.061" size="0.008 0.005 0.0005" material="grey" group="1"/>
-                    <geom name="hold2_contact_L" type="box" pos="-0.0715 0.203 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
-                    <geom name="hold2_contact_r" type="box" pos="-0.0545 0.203 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
-                </body>  
-                <body name="square_hold_2_1" pos="-0.02 0.021 0.017" euler="1.3441278049432237e-15 3.8893845486631795e-62 -4.4043049545721995e-46">
-                    <geom name="square_hold_2_1_geom" type="mesh" mesh="square_hold" pos="-0.13 -0.025 0" euler="0 0 0" material="blue"/>
-                    <inertial mass="0.010188256727041564" pos="0.06697633301052071 0.22614883188339693 0.06835511028606878" fullinertia="3.808437067109611e-07 5.521034781505856e-07 5.326054590652897e-07 5.669535786076984e-10 -5.618073240202685e-10 6.335656325674681e-08" />
-                    <site name="hold2_1_target" pos="-0.063 0.205 0.065" size="0.001" material="green" group="1"/>
-                    <geom name="hold2_1_contact_m" type="box" pos="-0.0630 0.203 0.061" size="0.008 0.005 0.0005" material="grey" group="1"/>
-                    <geom name="hold2_1_contact_L" type="box" pos="-0.0715 0.203 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
-                    <geom name="hold2_1_contact_r" type="box" pos="-0.0545 0.203 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
-                </body> 
-                <body name="square_hold_3" pos="-0.04 -2.870682836232269e-17 0.01699999871850016" euler="1.3441278049432237e-15 3.8893845486631795e-62 -4.4043049545721995e-46">
-                    <geom name="square_hold_3_geom" type="mesh" mesh="square_hold" pos="-0.1 -0.225 0" euler="0 0 0" material="red"/>
-                    <inertial mass="0.010188256727041564" pos="0.06697633301052071 0.22614883188339693 0.06835511028606878" fullinertia="3.808437067109611e-07 5.521034781505856e-07 5.326054590652897e-07 5.669535786076984e-10 -5.618073240202685e-10 6.335656325674681e-08" />
-                    <site name="hold3_target" pos="-0.033 0.003 0.065" size="0.001" material="green" group="1"/>
-                    <geom name="hold3_contact_m" type="box" pos="-0.0330 0.003 0.061" size="0.008 0.005 0.0005" material="grey" group="1"/>
-                    <geom name="hold3_contact_L" type="box" pos="-0.0415 0.003 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
-                    <geom name="hold3_contact_r" type="box" pos="-0.0245 0.003 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
-                </body> 
-                <body name="square_hold_3_1" pos="-0.03 0.021 0.017" euler="1.3441278049432237e-15 3.8893845486631795e-62 -4.4043049545721995e-46">
-                    <geom name="square_hold_3_1_geom" type="mesh" mesh="square_hold" pos="-0.1 -0.225 0" euler="0 0 0" material="blue"/>
-                    <inertial mass="0.010188256727041564" pos="0.06697633301052071 0.22614883188339693 0.06835511028606878" fullinertia="3.808437067109611e-07 5.521034781505856e-07 5.326054590652897e-07 5.669535786076984e-10 -5.618073240202685e-10 6.335656325674681e-08" />
-                    <site name="hold3_1_target" pos="-0.033 0.003 0.065" size="0.001" material="green" group="1"/>
-                    <geom name="hold3_1_contact_m" type="box" pos="-0.0330 0.003 0.061" size="0.008 0.005 0.0005" material="grey" group="1"/>
-                    <geom name="hold3_1_contact_L" type="box" pos="-0.0415 0.003 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
-                    <geom name="hold3_1_contact_r" type="box" pos="-0.0245 0.003 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
-                </body> 
-                <body name="square_hold_4" pos="-0.04 -2.870682836232269e-17 0.01699999871850016" euler="1.3441278049432237e-15 3.8893845486631795e-62 -4.4043049545721995e-46">
-                    <geom name="square_hold_4_geom" type="mesh" mesh="square_hold" pos="-0.015 -0.225 0" euler="0 0 0" material="red"/>
-                    <inertial mass="0.010188256727041564" pos="0.06697633301052071 0.22614883188339693 0.06835511028606878" fullinertia="3.808437067109611e-07 5.521034781505856e-07 5.326054590652897e-07 5.669535786076984e-10 -5.618073240202685e-10 6.335656325674681e-08" />
-                    <site name="hold4_target" pos="0.0525 0.003 0.065" size="0.001" material="green" group="1"/>
-                    <geom name="hold4_contact_m" type="box" pos="0.0520 0.003 0.061" size="0.008 0.005 0.0005" material="grey" group="1"/>
-                    <geom name="hold4_contact_L" type="box" pos="0.0605 0.003 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
-                    <geom name="hold4_contact_r" type="box" pos="0.0435 0.003 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
-                </body>              
-                <body name="square_hold_4_1" pos="-0.02 0.021 0.017" euler="1.3441278049432237e-15 3.8893845486631795e-62 -4.4043049545721995e-46">
-                    <geom name="square_hold_4_1_geom" type="mesh" mesh="square_hold" pos="-0.015 -0.225 0" euler="0 0 0" material="blue"/>
-                    <inertial mass="0.010188256727041564" pos="0.06697633301052071 0.22614883188339693 0.06835511028606878" fullinertia="3.808437067109611e-07 5.521034781505856e-07 5.326054590652897e-07 5.669535786076984e-10 -5.618073240202685e-10 6.335656325674681e-08" />
-                    <site name="hold4_1_target" pos="0.0525 0.003 0.065" size="0.001" material="green" group="1"/>
-                    <geom name="hold4_1_contact_m" type="box" pos="0.0520 0.003 0.061" size="0.008 0.005 0.0005" material="grey" group="1"/>
-                    <geom name="hold4_1_contact_L" type="box" pos="0.0605 0.003 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
-                    <geom name="hold4_1_contact_r" type="box" pos="0.0435 0.003 0.065" size="0.0008 0.005 0.005" material="grey" group="1"/>
                 </body>
             </body>    
     </worldbody>
@@ -239,50 +301,50 @@
     <actuator>
     <!-- Left leg -->
     <position name="act_hiproll_L" joint="waist_waist_joint_pelvisY_L"
-              kp="40" ctrlrange="0 1.5708"/>
+              kp="20" ctrlrange="0 1.5708"/>
     <position name="act_hipyaw_L" joint="pelvisY_L_pelvisY_L_joint_pelvisP_L"
-              kp="40" ctrlrange="-1.5708 0"/>
+              kp="20" ctrlrange="-1.5708 0"/>
     <position name="act_thigh_L" joint="pelvisP_L_pelvisP_L_joint_thigh_L"
-              kp="40" ctrlrange="-1.5708 0"/>
+              kp="20" ctrlrange="-1.5708 0"/>
     <position name="act_knee_L" joint="thigh_L_thigh_L_joint_calf_L"
-              kp="50" ctrlrange="-1.5708 0"/>
+              kp="20" ctrlrange="-1.5708 0"/>
     <position name="act_ankle_L" joint="calf_L_calf_L_joint_sole_L"
-              kp="30" ctrlrange="-1.5708 1.5708"/>
+              kp="20" ctrlrange="-1.5708 1.5708"/>
 
     <!-- Right leg -->
     <position name="act_hiproll_R" joint="waist_waist_joint_pelvisY_R"
-              kp="40" ctrlrange="0 1.5708"/>
+              kp="20" ctrlrange="0 1.5708"/>
     <position name="act_hipyaw_R" joint="pelvisY_R_pelvisY_R_joint_pelvisP_R"
-              kp="40" ctrlrange="0 1.5708"/>
+              kp="20" ctrlrange="0 1.5708"/>
     <position name="act_thigh_R" joint="pelvisP_R_pelvisP_R_joint_thigh_R"
-              kp="40" ctrlrange="0 1.5708"/>
+              kp="20" ctrlrange="0 1.5708"/>
     <position name="act_knee_R" joint="thigh_R_thigh_R_joint_calf_R"
-              kp="50" ctrlrange="-1.5708 0"/>
+              kp="20" ctrlrange="-1.5708 0"/>
     <position name="act_ankle_R" joint="calf_R_calf_R_joint_sole_R"
-              kp="30" ctrlrange="-1.5708 1.5708"/>
+              kp="20" ctrlrange="-1.5708 1.5708"/>
 
     <!-- Torso -->
     <position name="act_torso" joint="waist_waist_joint_torso"
-              kp="30" ctrlrange="-1.5708 1.5708"/>
+              kp="20" ctrlrange="-1.5708 1.5708"/>
 
     <!-- Right arm -->
     <position name="act_shoulder_R" joint="torso_torso_joint_upperarm_R"
-              kp="25" ctrlrange="-1.5708 1.5708"/>
+              kp="20" ctrlrange="-1.5708 1.5708"/>
     <position name="act_elbow_R" joint="upperarm_R_upperarm_R_joint_forearm_R"
-              kp="25" ctrlrange="-1.5708 1.5708"/>
+              kp="20" ctrlrange="-1.5708 1.5708"/>
     <position name="act_wrist_R" joint="forearm_R_forearm_R_joint_hand_R"
               kp="20" ctrlrange="-1.5708 1.5708"/>
     <position name="act_finger_R" joint="hand_R_hand_R_joint_finger_R"
-              kp="10" ctrlrange="-1.0472 1.0472"/>
+              kp="20" ctrlrange="-1.0472 1.0472"/>
 
     <!-- Left arm -->
     <position name="act_shoulder_L" joint="torso_torso_joint_upperarm_L"
-              kp="25" ctrlrange="-1.5708 1.5708"/>
+              kp="20" ctrlrange="-1.5708 1.5708"/>
     <position name="act_elbow_L" joint="upperarm_L_upperarm_L_joint_forearm_L"
-              kp="25" ctrlrange="-1.5708 1.5708"/>
+              kp="20" ctrlrange="-1.5708 1.5708"/>
     <position name="act_wrist_L" joint="forearm_L_forearm_L_joint_hand_L"
               kp="20" ctrlrange="-1.5708 1.5708"/>
     <position name="act_finger_L" joint="hand_L_hand_L_joint_finger_L"
-              kp="10" ctrlrange="-1.0472 1.0472"/>
+              kp="20" ctrlrange="-1.0472 1.0472"/>
 </actuator>
 </mujoco>

@@ -2,10 +2,12 @@ import mujoco
 import mujoco.viewer
 import numpy as np
 import time
+import tkinter as tk
+from threading import Thread
 
-XML_PATH = "models/XS-Robot(Alex).xml"
+XML_PATH = "XS-Robot(Alex).xml"
 
-model = mujoco.MjModel.from_xml_path(XML_PATH)
+model = mujoco.MjModel.from_xml_path("models/XS-Robot(Alex).xml")
 data = mujoco.MjData(model)
 
 # =========================================================
@@ -56,46 +58,48 @@ def deg(vals):
 pose_data = {
     "L_arm": {
         "start": deg([0.0, 0.0, 0.0]),
-        "above": deg([20.0, 22.0, 0.0]),
-        "approach": deg([-3.0, 22.0, 0.0]),
-        "hook": deg([-3.0, 22.0, 0.0]),
+        "above": deg([25.0, 22.0, 31.0]),
+        "approach": deg([-28.0, 22.0, 31.0]),
+        "hook": deg([-70.0, 22.0, 38.0]),
         "extra_start": 0.0,
         "extra_hook": 0.0,
     },
     "R_arm": {
         "start": deg([0.0, 0.0, 0.0]),
-        "above": deg([20.0, -22.0, 0.0]),
-        "approach": deg([-3.0, -22.0, 0.0]),
-        "hook": deg([-3.0, -22.0, 0.0]),
+        "above": deg([25.0, -22.0, -31.0]),
+        "approach": deg([-28.0, -22.0, -31.0]),
+        "hook": deg([-80.0, -22.0, -25.0]),
         "extra_start": 0.0,
         "extra_hook": 0.0,
     },
     "L_leg": {
         "start": deg([0.0, 0.0, 0.0, 0.0, 0.0]),
-        "above": deg([0.0, -70.0, -65.0, -65.0, 0.0]),
-        "approach": deg([0.0, -70.0, -90.0, -90.0, 0.0]),
-        "hook": deg([0.0, -20.0, -52.0, -52.0, 0.0]),
+        "above": deg([0.0, -55.0, -8.0, -8.0, 0.0]),
+        "approach": deg([0.0, -55.0, -82.0, -82.0, 0.0]),
+        "hook": deg([0.0, -30.0, -53.0, -53.0, 0.0]),
         "extra_start": 0.0,
         "extra_hook": 0.0,
     },
     "R_leg": {
-        "start": deg([0.0, 0.0, 0.0, 0.0, 0.0]),   # 你圖裡是 None，這裡先用全 0 當 start
-        "above": deg([0.0, 80.0, 65.0, -65.0, 0.0]),
-        "approach": deg([0.0, 80.0, 90.0, -90.0, 0.0]),
-        "hook": deg([0.0, 10, 50.0, -50.0, 0.0]),
+        "start": deg([0.0, 0.0, 0.0, 0.0, 0.0]),
+        "above": deg([0.0, 54.0, 8.0, -8.0, 0.0]),
+        "approach": deg([0.0, 55.0, 82.0, -82.0, 0.0]),
+        "hook": deg([0.0, 20.0, 49.0, -49.0, 0.0]),
         "extra_start": 0.0,
         "extra_hook": 0.0,
     },
 }
 
 # =========================================================
+# shoulder sync offset
+# =========================================================
+shoulder_sync_offset = 0.0
+current_display_state = None
+
+# =========================================================
 # helpers
 # =========================================================
 def get_full_state(which_pose="start"):
-    """
-    Build a full-body control dict:
-    for every limb -> joints + extra
-    """
     state = {}
     for limb in limb_cfg:
         state[limb] = {
@@ -114,8 +118,18 @@ def copy_state(state):
     return out
 
 def apply_full_state(state):
+    global shoulder_sync_offset
+
     for limb, cfg in limb_cfg.items():
-        for aid, val in zip(cfg["act_ids"], state[limb]["joints"]):
+        joint_vals = np.array(state[limb]["joints"], dtype=float).copy()
+
+        # sync both shoulders in same direction
+        if limb == "L_arm":
+            joint_vals[0] += shoulder_sync_offset
+        elif limb == "R_arm":
+            joint_vals[0] += shoulder_sync_offset
+
+        for aid, val in zip(cfg["act_ids"], joint_vals):
             data.ctrl[aid] = float(val)
 
         if cfg["extra_aid"] is not None:
@@ -133,16 +147,21 @@ def interpolate_states(state_a, state_b, alpha):
     return out
 
 def move_full_state(viewer, state_a, state_b, steps=100, sleep=0.01):
+    global current_display_state
     for i in range(steps):
         alpha = (i + 1) / steps
         state = interpolate_states(state_a, state_b, alpha)
+        current_display_state = copy_state(state)
         apply_full_state(state)
         mujoco.mj_step(model, data)
         viewer.sync()
         time.sleep(sleep)
 
 def hold(viewer, steps=80, sleep=0.01):
+    global current_display_state
     for _ in range(steps):
+        if current_display_state is not None:
+            apply_full_state(current_display_state)
         mujoco.mj_step(model, data)
         viewer.sync()
         time.sleep(sleep)
@@ -156,32 +175,46 @@ def print_pose_summary():
     print("====================\n")
 
 # =========================================================
+# slider UI
+# =========================================================
+def launch_shoulder_slider():
+    def on_slider(val):
+        global shoulder_sync_offset
+        shoulder_sync_offset = np.deg2rad(float(val))
+
+    root = tk.Tk()
+    root.title("Shoulder Sync Control")
+    root.geometry("320x140")
+
+    label = tk.Label(root, text="Both Shoulders Sync Offset (deg)", font=("Arial", 11))
+    label.pack(pady=8)
+
+    slider = tk.Scale(
+        root,
+        from_=-90,
+        to=90,
+        orient="horizontal",
+        length=260,
+        resolution=1,
+        command=on_slider
+    )
+    slider.set(0)
+    slider.pack()
+
+    note = tk.Label(root, text="Drag to adjust both shoulders together")
+    note.pack(pady=5)
+
+    root.mainloop()
+
+# =========================================================
 # sequence builder
 # =========================================================
 def build_sequence_states():
-    """
-    Create full-body sequence:
-    0. all start
-    1. L_arm above
-    2. L_arm approach
-    3. L_arm hook
-    4. R_arm above   (L_arm stays hook)
-    5. R_arm approach
-    6. R_arm hook
-    7. L_leg above   (both arms stay hook)
-    8. L_leg approach
-    9. L_leg hook
-    10. R_leg above  (L_arm, R_arm, L_leg stay hook)
-    11. R_leg approach
-    12. R_leg hook
-    """
     states = []
 
-    # S0: all start
     s0 = get_full_state("start")
     states.append(("All limbs at start", s0))
 
-    # Left arm moves
     s1 = copy_state(states[-1][1])
     s1["L_arm"]["joints"] = pose_data["L_arm"]["above"].copy()
     s1["L_arm"]["extra"] = pose_data["L_arm"]["extra_start"]
@@ -196,7 +229,6 @@ def build_sequence_states():
     s3["L_arm"]["extra"] = pose_data["L_arm"]["extra_hook"]
     states.append(("Left arm hook", s3))
 
-    # Right arm moves, left arm stays hook
     s4 = copy_state(states[-1][1])
     s4["R_arm"]["joints"] = pose_data["R_arm"]["above"].copy()
     s4["R_arm"]["extra"] = pose_data["R_arm"]["extra_start"]
@@ -211,7 +243,6 @@ def build_sequence_states():
     s6["R_arm"]["extra"] = pose_data["R_arm"]["extra_hook"]
     states.append(("Right arm hook", s6))
 
-    # Left leg moves, both arms stay hook
     s7 = copy_state(states[-1][1])
     s7["L_leg"]["joints"] = pose_data["L_leg"]["above"].copy()
     states.append(("Left leg above", s7))
@@ -224,7 +255,6 @@ def build_sequence_states():
     s9["L_leg"]["joints"] = pose_data["L_leg"]["hook"].copy()
     states.append(("Left leg hook", s9))
 
-    # Right leg moves, others stay hook
     s10 = copy_state(states[-1][1])
     s10["R_leg"]["joints"] = pose_data["R_leg"]["above"].copy()
     states.append(("Right leg above", s10))
@@ -243,14 +273,18 @@ def build_sequence_states():
 # main
 # =========================================================
 with mujoco.viewer.launch_passive(model, data) as viewer:
+    slider_thread = Thread(target=launch_shoulder_slider, daemon=True)
+    slider_thread.start()
+
     print_pose_summary()
 
     sequence = build_sequence_states()
 
-    # initialize at all-start
-    apply_full_state(sequence[0][1])
+    current_display_state = copy_state(sequence[0][1])
+    apply_full_state(current_display_state)
 
     for _ in range(200):
+        apply_full_state(current_display_state)
         mujoco.mj_step(model, data)
         viewer.sync()
         time.sleep(0.01)
@@ -258,24 +292,29 @@ with mujoco.viewer.launch_passive(model, data) as viewer:
     print("Start climbing standby sequence...")
     print("Sequence: L_arm -> R_arm -> L_leg -> R_leg")
 
-    # transition timing
     for idx in range(len(sequence) - 1):
         label_a, state_a = sequence[idx]
         label_b, state_b = sequence[idx + 1]
 
         print(f"{idx:02d}: {label_a}  -->  {label_b}")
 
-        # tune per stage
         if "above" in label_b:
             steps = 110
         elif "approach" in label_b:
             steps = 120
-        else:  # hook
+        else:
             steps = 140
 
         move_full_state(viewer, state_a, state_b, steps=steps, sleep=0.01)
         hold(viewer, steps=40, sleep=0.01)
 
     print("\nFull climbing standby pose reached.")
-    print("Press ENTER to exit.")
-    input()
+    print("Now use the slider window to tune both shoulders.")
+    
+    current_display_state = copy_state(sequence[-1][1])
+
+    while viewer.is_running():
+        apply_full_state(current_display_state)
+        mujoco.mj_step(model, data)
+        viewer.sync()
+        time.sleep(0.01)
