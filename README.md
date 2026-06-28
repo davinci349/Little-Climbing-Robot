@@ -2,7 +2,7 @@
 
 <p align="center">
   <img src="images/XS_Robot_1.2.JPG" width="300" alt="Little Robot">
-  <img src="images/simulate in mujoco.png" width="600" alt="Little Robot">
+  <img src="images/simulate in mujoco.png" width="500" alt="Little Robot">
 </p>
 
 
@@ -20,14 +20,14 @@ The robot uses computer vision and visual servoing to detect colored climbing ho
 ### Body Frame Detection
 
 <p align="center">
-  <img src="images/body_frame.gif" width="300" alt="Body Frame Detection">
+  <img src="images/body_frame.gif" width="200" alt="Body Frame Detection">
 </p>
 
 
 ### Real Robot Climbing
 
 <p align="center">
-  <img src="images/frame_estimate.gif" width="300" alt="Real Robot Climbing">
+  <img src="images/frame_estimate.gif" width="200" alt="Real Robot Climbing">
 </p>
 
 
