@@ -2,11 +2,9 @@
 
 <p align="center">
   <img src="images/XS_Robot_1.2.JPG" width="300" alt="Little Robot">
-</p>
-
-<p align="center">
   <img src="images/simulate in mujoco.png" width="600" alt="Little Robot">
 </p>
+
 
 
 ## Overview
