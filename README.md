@@ -18,13 +18,13 @@ The robot uses computer vision and visual servoing to detect colored climbing ho
 ### Real Robot Climbing
 
 <p align="center">
-  <img src="images/frame_estimate.gif" width="600" alt="Real Robot Climbing">
+  <img src="images/frame_estimate.gif" width="300" alt="Real Robot Climbing">
 </p>
 
 ### Body Frame Detection
 
 <p align="center">
-  <img src="images/body_frame.gif" width="600" alt="Body Frame Detection">
+  <img src="images/body_frame.gif" width="300" alt="Body Frame Detection">
 </p>
 
 ### Visual Servoing
