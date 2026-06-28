@@ -1,8 +1,8 @@
 # Little Robot in MuJoCo
 
 <p align="center">
-  <img src="images/XS_Robot_1.2.JPG" width="300" alt="Little Robot">
-  <img src="images/simulate in mujoco.png" width="500" alt="Little Robot">
+  <img src="images/XS_Robot_1.2.JPG" width="200" alt="Little Robot">
+  <img src="images/simulate in mujoco.png" width="400" alt="Little Robot">
 </p>
 
 
